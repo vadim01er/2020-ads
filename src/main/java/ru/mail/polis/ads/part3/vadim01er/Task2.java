@@ -1,4 +1,3 @@
-
 package ru.mail.polis.ads.part3.vadim01er;
 
 import java.io.BufferedReader;
