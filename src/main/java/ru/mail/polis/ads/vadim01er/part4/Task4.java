@@ -1,33 +1,30 @@
-package ru.mail.polis.ads.part2.vadim01er;
+package ru.mail.polis.ads.vadim01er.part4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-// https://www.e-olymp.com/ru/submissions/7436333
+// https://www.e-olymp.com/ru/submissions/7526272
 
-public class Task2 {
+public class Task4 {
 
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
-        ArrayList<Integer> list = new ArrayList<>();
         int n = scanner.nextInt();
-        Integer[] arrInt = new Integer[n];
-        for (int i = 0; i < n; i++) arrInt[i] = scanner.nextInt();
-        Arrays.sort(arrInt, (i1, i2) -> {
-            int modI = i1 % 10;
-            int modJ = i2 % 10;
-            if (modI == modJ) {
-                return Integer.compare(i1, i2);
-            } else return Integer.compare(modI, modJ);
-        });
-        for (int i = 0; i < n; i++) { System.out.print(arrInt[i] + " "); }
+        int[][] arr = new int[2][n + 2];
+        for (int i = 1; i < n + 1; i++) arr[0][i] = scanner.nextInt();
+        int k = scanner.nextInt();
+        for (int i = 1; i < n + 2; i++) {
+            arr[1][i] = arr[1][i - 1];
+            for (int j = Math.max(i - k, 0); j < i; j++) {
+                arr[1][i] = Math.max(arr[1][i], arr[1][j]);
+            }
+            arr[1][i] += arr[0][i];
+        }
+        System.out.println(arr[1][n + 1]);
     }
-    
 
     private static class FastScanner {
         private final BufferedReader reader;

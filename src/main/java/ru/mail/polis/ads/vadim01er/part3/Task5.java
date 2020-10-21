@@ -1,5 +1,5 @@
 
-package ru.mail.polis.ads.part3.vadim01er;
+package ru.mail.polis.ads.vadim01er.part3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
