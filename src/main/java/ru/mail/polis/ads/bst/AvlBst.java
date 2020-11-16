@@ -34,9 +34,10 @@ public class AvlBst<Key extends Comparable<Key>, Value>
     private Node get(Node node, Key key) {
         if (node == null)
             return null;
-        if (node.key.compareTo(key) > 0)
+        int compare = node.key.compareTo(key);
+        if (compare > 0)
             return get(node.left, key);
-        if (node.key.compareTo(key) < 0)
+        if (compare < 0)
             return get(node.right, key);
         return node;
     }
