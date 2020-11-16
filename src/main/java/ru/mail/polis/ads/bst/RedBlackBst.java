@@ -12,18 +12,39 @@ public class RedBlackBst<Key extends Comparable<Key>, Value>
     private static final boolean BLACK = false;
     private static final boolean RED = true;
 
+    private Node root;
+    private int size;
+
     private class Node {
         Key key;
         Value value;
         Node left;
         Node right;
         boolean color;
+
+        public Node(Key key, Value value, boolean color) {
+            this.key = key;
+            this.value = value;
+            this.color = color;
+        }
     }
 
     @Nullable
     @Override
     public Value get(@NotNull Key key) {
-        throw new UnsupportedOperationException("Implement me");
+        return get(root, key);
+    }
+
+    private Value get(Node node, Key key) {
+        if (node == null) return null;
+        int compare = node.key.compareTo(key);
+        if (compare > 0) {
+            return get(node.right, key);
+        }
+        else if (compare < 0) {
+            return get(node.left, key);
+        }
+        else return node.value;
     }
 
     @Override
