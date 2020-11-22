@@ -9,7 +9,7 @@ public class Table<K, V> implements HashTable<K, V> {
 
     private int capacity;
     private int size = 0;
-    private static double FILL_FACTORY;
+    private double FILL_FACTOR;
 
     private static class Cell<K, V> {
         private final K key;
@@ -26,11 +26,11 @@ public class Table<K, V> implements HashTable<K, V> {
     public Table(int capacity, double fillFactory) {
         this.capacity = capacity;
         array = new Cell[capacity];
-        FILL_FACTORY = fillFactory;
+        FILL_FACTOR = fillFactory;
     }
 
     public Table() {
-        FILL_FACTORY = (double) 0.75;
+        FILL_FACTOR = 0.75;
         capacity = 16;
         array = new Cell[capacity];
     }
@@ -85,12 +85,10 @@ public class Table<K, V> implements HashTable<K, V> {
                 current.next.value = v;
             }
         }
-        if (size >= FILL_FACTORY * capacity) {
+        if (size >= FILL_FACTOR * capacity) {
             resize();
         }
     }
-
-
 
     @Override
     public @Nullable V remove(@NotNull K k) {
