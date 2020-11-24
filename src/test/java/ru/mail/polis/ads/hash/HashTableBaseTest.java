@@ -238,7 +238,7 @@ class HashTableBaseTest {
         }
         assertEquals(reference.size(), table.size());
         for (Map.Entry<Key, String> entry: reference.entrySet()) {
-            assertEquals(entry.getValue(), table.get(entry.getKey()));
+            assertEquals(entry.getValue(), table.get(new Key(entry.getKey().value)));
         }
     }
 
@@ -254,7 +254,7 @@ class HashTableBaseTest {
         }
         assertEquals(reference.size(), table.size());
         for (Map.Entry<Key, String> entry: reference.entrySet()) {
-            assertEquals(entry.getValue(), table.get(entry.getKey()));
+            assertEquals(entry.getValue(), table.get(new Key(entry.getKey().value)));
         }
     }
 }
