@@ -177,7 +177,7 @@ N.B. Pull-реквесты нужно делать в ветку `hash`.
 
 Задачки с e-olymp.
 
-Дэдлайн - ??.12
+Дэдлайн - 9.12
   * https://www.e-olymp.com/ru/problems/1948 - Топологическая сортировка
   * https://www.e-olymp.com/ru/problems/2022 - Циклы в графе
   * https://www.e-olymp.com/ru/problems/1453 - Форд-Беллман
