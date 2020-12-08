@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
-//
+// https://www.e-olymp.com/ru/submissions/7985449
 
 public class Task2 {
 
@@ -38,9 +38,6 @@ public class Task2 {
                     '}';
         }
     }
-
-    private static int start = -1;
-    private static int end;
     private static Graph graph;
 
     public static void main(String[] args) {
@@ -53,53 +50,63 @@ public class Task2 {
         }
         int[] color = new int[n + 1];
         int[] path = new int[n + 1];
+        boolean[] cycle = new boolean[n + 1];
         Arrays.fill(path, -1);
 
         for (int i = 1; i <= n; i++) {
             if (color[i] == 0) {
-                if (hasCycle(i, color, path)) {
-                    break;
-                }
+                findCycle(i, color, path, cycle);
             }
         }
 
-        if (start == -1) {
+        int min = Integer.MAX_VALUE;
+        for (int i = 1; i < cycle.length; i++) {
+            if (cycle[i] && min > i) {
+                min = i;
+            }
+        }
+
+        if (min == Integer.MAX_VALUE) {
             System.out.println("No");
         } else {
             System.out.println("Yes");
-            int ans = start;
-            for (int i = end; i != start; i = path[i]) {
-                if (ans > i) {
-                    ans = i;
-                }
-            }
-            if (ans > start) {
-                ans = start;
-            }
-            System.out.println(ans);
+            System.out.println(min);
         }
     }
 
-    private static boolean hasCycle( int vertex, int[] color, int[] path) {
-
-
-
-
-        color[vertex] = 1;
-        for (int vertex2 : graph.getEdges(vertex)) {
-            if (color[vertex2] == 0) {
-                path[vertex2] = vertex;
-                if (hasCycle(vertex2, color, path)) {
-                    return true;
+    private static void findCycle( int vertex, int[] color, int[] path, boolean[] cycle) {
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.addFirst(vertex);
+        while (!queue.isEmpty()) {
+            int current = queue.peek();
+            color[current] = 1;
+            boolean isCycle = false;
+            for (int next : graph.getEdges(current)) {
+                if (color[next] == 0 && !(path[current] == next)) {
+                    path[next] = current;
+                    queue.push(next);
+                    isCycle = true;
+                    break;
+                } else if (color[next] == 1 && !(path[current] == next)) {
+                    int j = current;
+                    cycle[next] = true;
+                    if (cycle[j]) {
+                        continue;
+                    }
+                    while (j != next) {
+                        cycle[j] = true;
+                        j = path[j];
+                        if (cycle[j]) {
+                            break;
+                        }
+                    }
                 }
-            } else if (color[vertex2] == 1 && vertex2 != path[vertex]) {
-                end = vertex;
-                start = vertex2;
-                return true;
+            }
+            if (!isCycle) {
+                queue.pop();
+                color[current] = 2;
             }
         }
-        color[vertex] = 2;
-        return false;
     }
 
     private static class FastScanner {
